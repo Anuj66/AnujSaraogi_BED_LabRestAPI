@@ -1,0 +1,1 @@
+Provided a dbScriptForInitialRun.sql file, for the first time if you run trying to run the application.
