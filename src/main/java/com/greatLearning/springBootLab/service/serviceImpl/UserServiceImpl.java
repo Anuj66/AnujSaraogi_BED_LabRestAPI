@@ -7,11 +7,9 @@ import com.greatLearning.springBootLab.repository.RoleRepository;
 import com.greatLearning.springBootLab.repository.UserRepository;
 import com.greatLearning.springBootLab.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,10 +31,10 @@ public class UserServiceImpl implements UserService {
         user.setUsername(userDto.getUsername());
         // encrypt the password using spring security
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        Role role = roleRepository.findByName("USER");
+        Role role = roleRepository.findByName("ROLE_USER");
         if (role == null) {
             Role userRole = new Role();
-            userRole.setName("USER");
+            userRole.setName("ROLE_USER");
             role = roleRepository.save(userRole);
         }
         user.setRoles(List.of(role));
@@ -56,16 +54,11 @@ public class UserServiceImpl implements UserService {
                 .collect(Collectors.toList());
     }
 
-    private UserDto mapToUserDto(User user){
+    private UserDto mapToUserDto(User user) {
         UserDto userDto = new UserDto();
         userDto.setId(user.getId());
         userDto.setUsername(user.getUsername());
         return userDto;
     }
 
-    private Role checkRoleExist(){
-        Role role = new Role();
-        role.setName("ROLE_ADMIN");
-        return roleRepository.save(role);
-    }
 }

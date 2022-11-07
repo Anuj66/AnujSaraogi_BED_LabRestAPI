@@ -37,11 +37,11 @@ public class AuthController {
             , BindingResult bindingResult, Model model) {
         User existingUser = userService.findUserByUsername(userDto.getUsername());
 
-        if(existingUser != null){
+        if (existingUser != null) {
             bindingResult.rejectValue("username", null,
                     "There is already an account registered with the same username");
         }
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             model.addAttribute("user", userDto);
             return "/register";
         }
@@ -50,7 +50,7 @@ public class AuthController {
     }
 
     @GetMapping("/users")
-    public String users(Model model){
+    public String users(Model model) {
         List<UserDto> users = userService.findAllUsers();
         model.addAttribute("users", users);
         return "users";
@@ -58,7 +58,7 @@ public class AuthController {
 
     // handler method to handle login request
     @GetMapping("/login")
-    public String login(){
+    public String login() {
         return "login";
     }
 
